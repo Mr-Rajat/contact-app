@@ -3,7 +3,9 @@ const { Schema } = mongoose;
 
 const ContactsSchema = new Schema({
     user: {
+        // to distingush b/w users to show them their respective contacts
         type: mongoose.Schema.Types.ObjectId,
+        // user model added
         ref: 'user'
     },
     name:{
