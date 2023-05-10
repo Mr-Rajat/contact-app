@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import AddContact from './AddContact';
 import ContactList from './ContactList';
@@ -34,7 +34,7 @@ const Home = () => {
   return (
     <div className='container mx-auto'>
 
-      {localStorage.getItem('token1') ?
+      {localStorage.getItem('authToken1') ?
         <div>
           <Header />
           <AddContact addContactHandler={addContactHandler} />

@@ -7,7 +7,7 @@ const ContactList = (props) => {
         <div className='grid grid-cols-3 justify-items-center py-4
         '>
             {contact.map((list) => (
-                <ContactCard contact={list}/>
+                <ContactCard contact={list} key={list.id}/>
 
                 // <div key={list.id} className='item'>
                 //     <div className='content'>
