@@ -1,18 +1,41 @@
 
-const userLogin = (state = { success: false }, action) => {
+const userLogin = (state = {
+    loginStatus: { success: false, authToken: "" },
+    // isFetchSuccess:false,
+    // isFetchFail:false,
+    registerStatus: { success: false } } , action) => {
     // console.log(state )
 
     switch (action.type) {
         case 'userLogin':
             return {
                 ...state,
-                success: action.payload,
-                // console.log("inside reducer", state),
+                loginStatus: {
+                    ...state.loginStatus,
+                    success: action.payload,
+                    // console.log("inside reducer", state),
+                }
             };
         case 'userLogout':
             return {
                 ...state,
-                success: false,
+                loginStatus: {
+                    ...state.loginStatus,
+                    success: false,
+                    // console.log("inside reducer", state),
+                }
+                // success: false,
+                // console.log("inside reducer", state),
+            };
+        case 'userRegister':
+            return {
+                ...state,
+                registerStatus: {
+                    ...state.registerStatus,
+                    success: action.payload,
+                    // console.log("inside reducer", state),
+                }
+                // success: false,
                 // console.log("inside reducer", state),
             };
             default:

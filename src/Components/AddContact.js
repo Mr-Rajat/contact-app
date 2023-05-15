@@ -11,8 +11,7 @@ const AddContact = (props) => {
   const handleSubmit = async(e) =>{
        e.preventDefault();
        if(contacts.name==="" || contacts.email === ""){
-        alert("All the fields are mandatory!");
-        return
+         return alert("All the fields are mandatory!");
        } 
       //  console.log(contacts);
        props.addContactHandler(contacts);

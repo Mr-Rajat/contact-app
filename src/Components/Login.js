@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 const Login = () => {
   const dispatch = useDispatch();
   const [credential, setCredential] = useState({ email: "", password: "" })
-  const userLogin = useSelector(state => state.userAuth.success);
+  const userLogin = useSelector(state => state.userAuth.loginStatus.success);
 
   const navigate = useNavigate();
 
@@ -50,7 +50,7 @@ const Login = () => {
         </div>
 
         <div className='grid grid-cols-1 pt-4 '>
-          <label className='text-md font-medium'>Name</label>
+          <label className='text-md font-medium'>Password</label>
           <input type="password" name='password' placeholder='Password' value={credential.password} autoComplete="off" onChange={handleChange} className='border border-1 border-slate-800 w-80 h-10 mt-2 pl-1' />
         </div>
 
