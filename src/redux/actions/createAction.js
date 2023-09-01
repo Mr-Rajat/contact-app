@@ -1,4 +1,5 @@
 import axios from 'axios'
+import api from '../axiosConfig'
 
 // user Authentication Actions.
 
@@ -33,7 +34,7 @@ export const userAuth = (credentials) => {
 
     }
 }
-export const userLogout = () =>{
+export const userLogout = () => {
     return async (dispatch) => {
         dispatch({
             type: 'userLogout',
@@ -46,7 +47,7 @@ export const createUser = (credentials) => {
     return async (dispatch) => {
         try {
             const response = await axios.post('http://localhost:5500/api/auth/createuser', {
-                name:credentials.name,
+                name: credentials.name,
                 email: credentials.email,
                 password: credentials.password,
             });
@@ -60,26 +61,26 @@ export const createUser = (credentials) => {
                     type: 'userRegister',
                     payload: response.data.success,
                 })
-                
+
                 // dispatch ({
                 //     type: 'userRegister',
                 //     payload: false,
                 // })
-                
+
                 // console.log(response.data.authToken);
                 // console.log(response.data.success);
             } else {
-                return console.log("inside try",response.data.error);
+                return console.log("inside try", response.data.error);
             }
 
 
 
             // console.log(response);
         } catch (error) {
-            dispatch ({
-                    type: 'userRegister',
-                    payload: false,
-                })
+            dispatch({
+                type: 'userRegister',
+                payload: false,
+            })
             console.log('error', error);
             console.clear();
         }
@@ -90,28 +91,19 @@ export const createUser = (credentials) => {
 
 // user Data actions
 
-export const fetchData = (token) => {
+export const fetchData = () => {
     return async (dispatch) => {
         try {
-            const response = await axios.get('http://localhost:5500/api/contacts/fetchallcontacts', {
-                headers: {
-                    'auth-token': token,
-                  },
-            });
-            
+            const response = await api.get('contacts/fetchallcontacts');
+            console.log(response.headers);
+
             // console.log(response.data)
 
-                dispatch({
-                    type: 'userContacts',
-                    payload: response.data,
-                })
-                // console.log(response.data.authToken);
-                // console.log(response.data.success);
-            
+            dispatch({
+                type: 'userContacts',
+                payload: response.data,
+            })
 
-
-
-            // console.log(response);
         } catch (error) {
             console.log('error', error);
         }
@@ -124,30 +116,36 @@ export const fetchData = (token) => {
 export const addData = (contactData) => {
     return async (dispatch) => {
         try {
-            const response = await axios.post('http://localhost:5500/api/contacts/addcontact',{
+            // eslint-disable-next-line
+            const response = await api.post('contacts/addcontact', {
                 name: contactData.name,
                 email: contactData.email,
 
-            },
-             {
-                headers: {
-                    'auth-token': localStorage.getItem('authToken1'),
-                  },
-            });
-            
-            // console.log(response.data)
+            },);
 
-                // dispatch({
-                //     type: 'addContacts',
-                //     payload: response.data,
-                // })
-                // console.log(response.data.authToken);
-                // console.log(response.data.success);
-            
+            // console.log(response)
+            if (response.status === 200) {
+                dispatch(fetchData());
+            }
+
+        } catch (AxiosError) {
+            console.log('error', AxiosError.message);
+        }
+
+    }
+}
 
 
-
+export const deleteContact = (id) => {
+    return async (dispatch) => {
+        try {
+            // eslint-disable-next-line
+            const response = await api.delete(`contacts/deletecontact/${id}`);
             // console.log(response);
+            if (response.status===200){
+                dispatch(fetchData());
+            }
+
         } catch (AxiosError) {
             console.log('error', AxiosError.message);
         }

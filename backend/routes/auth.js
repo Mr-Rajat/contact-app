@@ -14,15 +14,15 @@ var jwt = require('jsonwebtoken');
 
 // Create a User using: POST "/api/auth/createuser". Doesn't require Auth
 
-router.post('/createuser',[
+router.post('/createuser', [
     // Validation check
     body('name', 'Enter a valid name').isLength({ min: 3 }),
     body('email', 'Enter a valid email').isEmail(),
     body('password', 'Password must be atleast 5 characters').isLength({ min: 5 }),
-], async (req, res)=>{
+], async (req, res) => {
 
     let success = false;
-//to add user without validatin 
+    //to add user without validatin 
     // console.log(req.body);
     // const user = User(req.body);
     // user.save()
@@ -33,19 +33,19 @@ router.post('/createuser',[
         return res.status(400).json({ success, errors: errors.array() });
     }
     // error handling
-    try{
+    try {
 
         // Check whether the user with this email exist already
         let user = await User.findOne({ email: req.body.email });
         if (user) {
-            return res.status(400).json({success, error: "Sorry a user with this email already exists" })
+            return res.status(400).json({ success, error: "Sorry a user with this email already exists" })
         }
         // creating salt
         const salt = await bcrypt.genSalt(10);
         const secPass = await bcrypt.hash(req.body.password, salt); //req.body.password
 
         // create user
-        user = await User.create({ 
+        user = await User.create({
             name: req.body.name,
             email: req.body.email,
             // password: req.body.password,
@@ -58,16 +58,18 @@ router.post('/createuser',[
                 id: user.id
             }
         }
-        const authToken = jwt.sign(data, JWT_SECRET);
-        console.log({authToken});
+        const authToken = jwt.sign(data, JWT_SECRET, {
+            expiresIn: '120s' // expires in 2min
+        });
+        console.log({ authToken });
 
         success = true;
         res.json({ success, authToken })
-    // sending response
+        // sending response
         // res.json(user)
     }
     // Catch Error
-    catch(error){
+    catch (error) {
         console.error(error.message);
         res.status(500).send("Internal Server Error")
     }
@@ -111,7 +113,7 @@ router.post('/login', [
         }
         const authToken = jwt.sign(data, JWT_SECRET);
         success = true;
-        res.json({success, authToken })
+        res.json({ success, authToken })
     } catch (error) {
         console.error(error.message);
         res.status(500).send("Internal Server Error")

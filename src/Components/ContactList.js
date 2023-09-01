@@ -4,7 +4,7 @@ import ContactCard from './ContactCard';
 const ContactList = (props) => {
     const contact = props.contacts;
     return (
-        <div className='grid grid-cols-3 justify-items-center py-4'>
+        <div className='grid grid-cols-3 justify-items-center bg-blue-100 '>
             {contact.length === 0 && 'No Contacts to display'}
             {contact.map((list) => (
                 

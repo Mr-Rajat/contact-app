@@ -13,45 +13,29 @@ const Home = () => {
   const useContacts = useSelector(state => state.userData.userContacts);
   // console.log(useContacts)
 
-
-  // if(useContacts.length!==0){
-  //   setContacts(useContacts);
-  //   // console.log(contacts)
-  // }
-  // setContacts(useContacts);
-
-  
+  // fetch contacts on first load
   useEffect(() => {
     const authToken = localStorage.getItem('authToken1');
     if (authToken) {
       // console.log(authToken)
-      // navigate('/')
       dispatch(actionCreators.fetchData(authToken)) 
       
     }
-    
-  }, [])
+    // eslint-disable-next-line
+  },[])
 
   useEffect(() => {
-    console.log(contacts)
+
     if(contacts.name.length!==0 && contacts.email.length !==0 ){
       dispatch(actionCreators.addData(contacts));
       setContacts({name:"", email:""});
-
-      const authToken = localStorage.getItem('authToken1');
-      if (authToken) {
-        dispatch(actionCreators.fetchData(authToken)) 
-        
-      }
     }
+    // eslint-disable-next-line
   }, [contacts]);
   
   const addContactHandler = async(contact) => {
-    console.log(contact);
+    // console.log(contact);
     setContacts({name: contact.name, email: contact.email});
-    
-    
-    // console.log(contacts)
     
   }
   // const contacts = [
@@ -85,10 +69,6 @@ const Home = () => {
         </div>
         :
         <div className='text-center font-bold text-4xl'>Need to login or signup</div>}
-
-      {/* <Header />
-      <AddContact addContactHandler={addContactHandler} />
-      <ContactList contacts={contacts} /> */}
 
     </div>
   )

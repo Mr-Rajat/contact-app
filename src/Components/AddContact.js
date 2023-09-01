@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 const AddContact = (props) => {
   const [contacts, setContacts] = useState({name:"", email:""});
@@ -34,7 +34,7 @@ const AddContact = (props) => {
                 <label className='text-md font-medium'>Email</label>
                 <input type="email" name='email' placeholder='Email' value={contacts.email} onChange={handleChange} className='border border-1 border-slate-800 w-80 h-10 mt-2 pl-1'/>
             </div>
-            <button className='button bg-green-600 text-white mt-4 px-6 py-1 rounded-lg hover:bg-green-700'>Add</button>
+            <button className='button bg-green-600 text-white mt-4 px-6 py-2 rounded-lg hover:bg-green-700'>Add</button>
         </form>
     </div>
   )

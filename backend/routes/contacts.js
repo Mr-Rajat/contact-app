@@ -12,11 +12,11 @@ router.get('/fetchallcontacts', fetchuser, async (req, res) => {
     try {
 
         const contacts = await Contacts.find({ user: req.user.id });
-        res.json(contacts)
+        return res.json(contacts)
 
     } catch (error) {
         console.error(error.message);
-        res.status(500).send("Internal Server Error")
+        return res.status(500).send("Internal Server Error")
     }
 
 })
@@ -43,7 +43,7 @@ router.post('/addcontact', fetchuser, [
         // once contact is set 
         const savedContact = await contact.save()
 
-        res.json(savedContact);
+        res.status(200).send({data:savedContact,msg:"Successfully Added Data"});
 
     } catch (error) {
         console.error(error.message);
@@ -103,7 +103,8 @@ router.delete('/deletecontact/:id', fetchuser, async (req, res) => {
         }
 
         contact = await Contacts.findByIdAndDelete(req.params.id)
-        res.json({ "Success": "Contact has been deleted", contact: contact });
+        // res.json({ "Success": "Contact has been deleted", contact: contact });
+        res.status(200).send({data:contact, msg:"Contact has been deleted"});
         // const note = Notes.findByIdAndUpdate()
 
     } catch (error) {
