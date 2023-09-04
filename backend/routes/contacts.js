@@ -76,7 +76,8 @@ router.put('/updatecontact/:id', fetchuser, async (req, res) => {
         }
         // update the the contact with new values, and new true means if there is new contact values then those will be added
         contact = await Contacts.findByIdAndUpdate(req.params.id, { $set: newContact }, { new: true })
-        res.json({ contact });
+        // res.json({ contact });
+        res.status(200).send({data:contact, msg:"Contact has been updated Successfully"});
         // const note = Notes.findByIdAndUpdate()
 
     } catch (error) {

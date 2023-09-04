@@ -1,8 +1,12 @@
 import { Fragment, useRef } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
+import { useDispatch } from 'react-redux';
+import { actionCreators } from '../redux';
 // import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
 
 export default function ModalComponent({ open, setOpen, setEditData, editData }) {
+
+    const dispatch = useDispatch();
 
 
     const cancelButtonRef = useRef(null);
@@ -14,7 +18,24 @@ export default function ModalComponent({ open, setOpen, setEditData, editData })
         })
     }
 
-    
+    const handleDataSubmit = (e) => {
+        e.preventDefault();
+        // console.log("Submitted");
+        if (editData.eName !== '' && editData.eEmail !== '') {
+            dispatch(actionCreators.updateContact(editData.id, editData.eName, editData.eEmail, editData.eTag));
+        }
+        setEditData({
+            id: '',
+            eName: '',
+            eEmail: '',
+            eTag: 'default'
+        })
+
+        setOpen(false);
+
+    }
+
+
 
 
     return (
@@ -47,7 +68,7 @@ export default function ModalComponent({ open, setOpen, setEditData, editData })
 
                                 <div className='border border-spacing-2 p-10 grid justify-center'>
                                     <h2 className='bg-slate-300 text-center p-2 text-lg font-medium border border-1 border-red-600'>Add Contact</h2>
-                                    <form className='' >
+                                    <form onSubmit={handleDataSubmit}>
                                         <div className='grid grid-cols-1 pt-4 '>
                                             <label className='text-md font-medium'>Name</label>
                                             <input type="text" name='eName' placeholder='Name' value={editData.eName} onChange={handleEditChange} className='border border-1 border-slate-800 w-80 h-10 mt-2 pl-1' />
@@ -59,14 +80,11 @@ export default function ModalComponent({ open, setOpen, setEditData, editData })
 
                                         <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                                             <button
-                                                type="button"
                                                 className="inline-flex w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 sm:ml-3 sm:w-auto"
-                                                onClick={() => setOpen(false)}
                                             >
-                                                Add
+                                                Update
                                             </button>
                                             <button
-                                                type="button"
                                                 className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
                                                 onClick={() => setOpen(false)}
                                                 ref={cancelButtonRef}

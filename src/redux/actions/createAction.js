@@ -95,7 +95,7 @@ export const fetchData = () => {
     return async (dispatch) => {
         try {
             const response = await api.get('contacts/fetchallcontacts');
-            console.log(response.headers);
+            // console.log(response.headers);
 
             // console.log(response.data)
 
@@ -142,7 +142,7 @@ export const deleteContact = (id) => {
             // eslint-disable-next-line
             const response = await api.delete(`contacts/deletecontact/${id}`);
             // console.log(response);
-            if (response.status===200){
+            if (response.status === 200) {
                 dispatch(fetchData());
             }
 
@@ -151,5 +151,27 @@ export const deleteContact = (id) => {
         }
 
 
+    }
+}
+
+export const updateContact = (id, name, email, tag) => {
+    return async (dispatch) => {
+        try {
+            const response = await api.put(`contacts/updatecontact/${id}`, {
+                name: name,
+                email: email,
+                tag: tag,
+            });
+
+            // console.log("update", response);
+
+            if(response.status === 200){
+                dispatch(fetchData());
+                // alert(response.data.msg);
+            }
+
+        } catch (AxiosError) {
+            console.log('error', AxiosError.msg);
+        }
     }
 }
