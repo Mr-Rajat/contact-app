@@ -1,5 +1,55 @@
 const Contacts = require('../models/Contacts');
 
+const { validationResult } = require('express-validator');
+
+
+
+exports.createContacts = async (req, res) => {
+
+    // return console.log("fileData", req.file);
+    // console.log(req.body, "Form Data");
+    // console.log(req.uploads);
+
+    try {
+        // destructured data from the body
+        const { name, email, tag } = req.body;
+
+        // console.log("Name", name, "email", email);
+        // If there are errors, return Bad request and the errors
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+        // setting values as defined in schema 
+        const contact = new Contacts({
+            name, email, tag, user: req.user.id, image: req.file.filename
+        })
+        // once contact is set 
+        const savedContact = await contact.save()
+
+        res.status(200).send({ data: savedContact, msg: "Successfully Added Data" });
+
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send("Internal Server Error")
+    }
+
+}
+
+exports.fetchContacts = async (req, res) => {
+
+    try {
+
+        const contacts = await Contacts.find({ user: req.user.id });
+        // console.log(contacts, "contacts")
+        return res.json(contacts)
+
+    } catch (error) {
+        console.error(error.message);
+        return res.status(500).send("Internal Server Error")
+    }
+
+}
 exports.update=async (req, res) => {
     const { name, email, tag } = req.body;
     try {
