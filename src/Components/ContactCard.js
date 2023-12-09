@@ -33,7 +33,7 @@ const ContactCard = (props) => {
         <div className="w-full max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mt-10 mb-10">
 
             <div className="flex flex-col items-center pb-6 pt-1">
-                <img className="w-24 h-24 mb-3 rounded-full shadow-lg" src={img} alt='profile' />
+                <img className="w-24 h-24 mb-3 rounded-full shadow-lg" src={`${list.image ? 'http://localhost:5500/'+list.image : img}`} alt='profile' />
                 <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white">{list.name}</h5>
                 <span className="text-sm text-gray-500 dark:text-gray-400">{list.email}</span>
                 <div className="flex mt-4 space-x-3 md:mt-6">

@@ -8,6 +8,11 @@ const ContactsSchema = new Schema({
         // user model added
         ref: 'user'
     },
+    image:{
+        // data: Buffer,
+        // contentType:String,
+        type: String
+    },
     name:{
         type: String,
         require: true

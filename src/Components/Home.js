@@ -17,7 +17,6 @@ const Home = () => {
   useEffect(() => {
     const authToken = localStorage.getItem('authToken1');
     if (authToken) {
-      // console.log(authToken)
       dispatch(actionCreators.fetchData(authToken)) 
       
     }
@@ -27,7 +26,12 @@ const Home = () => {
   useEffect(() => {
 
     if(contacts.name.length!==0 && contacts.email.length !==0 ){
-      dispatch(actionCreators.addData(contacts));
+      console.log(contacts)
+      let payload = new FormData();
+      payload.append("name",contacts.name)
+      payload.append("email",contacts.email)
+      payload.append("image",contacts.image)
+      dispatch(actionCreators.addData(payload));
       setContacts({name:"", email:""});
     }
     // eslint-disable-next-line
@@ -35,29 +39,10 @@ const Home = () => {
   
   const addContactHandler = async(contact) => {
     // console.log(contact);
-    setContacts({name: contact.name, email: contact.email});
+    setContacts({name: contact.name, email: contact.email,image:contact.image});
     
   }
-  // const contacts = [
-  //   {
-  //     id: "1",
-  //     name: "Rajat",
-  //     email: "rajat@gmail.com",
-  //     image: "https://www.neerajminhas.com/static/media/neeraj.24287aa3f6b4bbb0c0f8.jpg"
-  //   },
-  //   {
-  //     id: "2",
-  //     name: "Neeraj",
-  //     email: "neeraj@gmail.com",
-  //     image: "https://www.neerajminhas.com/static/media/neeraj.24287aa3f6b4bbb0c0f8.jpg"
-  //   },
-  //   {
-  //     id: "3",
-  //     name: "Shiv",
-  //     email: "shiv@gmail.com",
-  //     image: "https://www.neerajminhas.com/static/media/neeraj.24287aa3f6b4bbb0c0f8.jpg"
-  //   }
-  // ]
+  
   return (
     <div className='container mx-auto'>
 

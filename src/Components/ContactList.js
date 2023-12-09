@@ -6,7 +6,8 @@ const ContactList = (props) => {
     const [open, setOpen] = useState(false);
     const [editData, setEditData] = useState({ id: '', eName: '', eEmail: '', eTag: 'default' });
     const contact = props.contacts;
-    const image = "https://www.neerajminhas.com/static/media/neeraj.24287aa3f6b4bbb0c0f8.jpg";
+    // const image = "https://www.neerajminhas.com/static/media/neeraj.24287aa3f6b4bbb0c0f8.jpg";
+    const image = "https://d36g7qg6pk2cm7.cloudfront.net/assets/profile-f17aa1dfbd0cb562142f1dcb10bb7ad33e1ac8417ad29a1cdab7dfbfbbfe2f15.png";
 
     // console.log(editData);
 

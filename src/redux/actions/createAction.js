@@ -61,14 +61,7 @@ export const createUser = (credentials) => {
                     type: 'userRegister',
                     payload: response.data.success,
                 })
-
-                // dispatch ({
-                //     type: 'userRegister',
-                //     payload: false,
-                // })
-
-                // console.log(response.data.authToken);
-                // console.log(response.data.success);
+                
             } else {
                 return console.log("inside try", response.data.error);
             }
@@ -114,14 +107,12 @@ export const fetchData = () => {
 
 
 export const addData = (contactData) => {
+    console.log(contactData)
     return async (dispatch) => {
         try {
             // eslint-disable-next-line
-            const response = await api.post('contacts/addcontact', {
-                name: contactData.name,
-                email: contactData.email,
-
-            },);
+            const response = await api.post('contacts/addcontact', 
+               contactData);
 
             // console.log(response)
             if (response.status === 200) {

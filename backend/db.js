@@ -7,7 +7,8 @@ exports.connect=()=>{
         uri,
         {
           useNewUrlParser: true,
-          useUnifiedTopology: true
+          useUnifiedTopology: true,
+          family: 4
         }
       ).then(()=>{
         console.log("db connected")

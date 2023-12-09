@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { actionCreators } from '../redux';
 import { useNavigate } from 'react-router-dom';
@@ -9,6 +9,24 @@ const Signup = () => {
 
   const [userData, setUserData] = useState({ name: "", email: "", password: "", cpassword: "" })
   const userRegistered = useSelector(state => state.userAuth.registerStatus.success);
+
+  const handleChange = (e) => {
+    setUserData({ ...userData, [e.target.name]: e.target.value })
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (userData.password !== userData.cpassword) {
+      setUserData({ password: "", cpassword: "" })
+      return alert("Password and Confirm Password must be same");
+    }
+    // console.log(credential);
+    dispatch(actionCreators.createUser(userData));
+
+    setUserData({ name: "", email: "", password: "", cpassword: "" });
+    // console.log(userLogin);
+
+  }
 
   useEffect(() => {
     // const authToken = localStorage.getItem('authToken1');
@@ -23,24 +41,6 @@ const Signup = () => {
     }
 
   }, [userRegistered])
-
-  const handleChange = (e) => {
-    setUserData({ ...userData, [e.target.name]: e.target.value })
-  }
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (userData.password !== userData.cpassword) {
-      setUserData({password: "", cpassword: ""})
-      return alert("Password and Confirm Password must be same");
-    }
-    // console.log(credential);
-    dispatch(actionCreators.createUser(userData));
-
-    setUserData({ name: "", email: "", password: "", cpassword: "" });
-    // console.log(userLogin);
-
-  }
 
   return (
     <div className=' p-10 grid justify-center'>

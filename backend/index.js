@@ -11,9 +11,13 @@ app.use(cors())
 
 // middleware
 app.use(express.json())
+
+// to view images in frontend
+app.use(express.static('uploads'));
+
 // Available Routes
-app.use('/api/auth',require('./routes/auth'))
-app.use('/api/contacts',require('./routes/contacts'))
+app.use('/api/auth', require('./routes/auth'))
+app.use('/api/contacts', require('./routes/contacts'))
 
 app.get('/', (req, res) => {
   res.send('Hello Rajat!')

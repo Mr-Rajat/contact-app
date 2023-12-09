@@ -2,9 +2,14 @@ import React from 'react'
 import { useState } from 'react'
 
 const AddContact = (props) => {
-  const [contacts, setContacts] = useState({name:"", email:""});
+  const [contacts, setContacts] = useState({name:"", email:"",image: ""});
 
   const handleChange = (e) =>{
+    if(e.target.name=="image")
+    {
+      setContacts({...contacts,[e.target.name]:e.target.files[0]})
+      return
+    }
     setContacts({...contacts,[e.target.name]: e.target.value})
   }
 
@@ -14,9 +19,10 @@ const AddContact = (props) => {
          return alert("All the fields are mandatory!");
        } 
       //  console.log(contacts);
+     
        props.addContactHandler(contacts);
 
-       setContacts({ name:"", email:""});
+       setContacts({ name:"", email:"", image:""});
 
   }
  
@@ -33,6 +39,10 @@ const AddContact = (props) => {
             <div className='grid grid-cols-1 pt-4'>
                 <label className='text-md font-medium'>Email</label>
                 <input type="email" name='email' placeholder='Email' value={contacts.email} onChange={handleChange} className='border border-1 border-slate-800 w-80 h-10 mt-2 pl-1'/>
+            </div>
+            <div className='grid grid-cols-1 pt-4'>
+                <label className='text-md font-medium'>Image</label>
+                <input type="file" name='image' placeholder='Email'  onChange={handleChange} className='border border-1 border-slate-800 w-80 h-10 mt-2 pl-1'/>
             </div>
             <button className='button bg-green-600 text-white mt-4 px-6 py-2 rounded-lg hover:bg-green-700'>Add</button>
         </form>
