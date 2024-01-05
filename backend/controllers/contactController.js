@@ -2,6 +2,8 @@ const Contacts = require('../models/Contacts');
 
 const { validationResult } = require('express-validator');
 
+// const Contacts = require('../models/Contacts');
+
 
 
 exports.createContacts = async (req, res) => {
@@ -50,7 +52,7 @@ exports.fetchContacts = async (req, res) => {
     }
 
 }
-exports.update=async (req, res) => {
+exports.update = async (req, res) => {
     const { name, email, tag } = req.body;
     try {
 
@@ -73,7 +75,7 @@ exports.update=async (req, res) => {
         // update the the contact with new values, and new true means if there is new contact values then those will be added
         contact = await Contacts.findByIdAndUpdate(req.params.id, { $set: newContact }, { new: true })
         // res.json({ contact });
-        res.status(200).send({data:contact, msg:"Contact has been updated Successfully"});
+        res.status(200).send({ data: contact, msg: "Contact has been updated Successfully" });
         // const note = Notes.findByIdAndUpdate()
 
     } catch (error) {
@@ -99,7 +101,7 @@ exports.delete = async (req, res) => {
 
         contact = await Contacts.findByIdAndDelete(req.params.id)
         // res.json({ "Success": "Contact has been deleted", contact: contact });
-        res.status(200).send({data:contact, msg:"Contact has been deleted"});
+        res.status(200).send({ data: contact, msg: "Contact has been deleted" });
         // const note = Notes.findByIdAndUpdate()
 
     } catch (error) {

@@ -3,7 +3,6 @@ const router = express.Router();
 
 const fetchuser = require('../middleware/fetchuser');
 
-const Contacts = require('../models/Contacts');
 const { body } = require('express-validator');
 const contactController = require('../controllers/contactController');
 const multer = require('multer');
